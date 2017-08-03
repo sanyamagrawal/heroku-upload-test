@@ -2,8 +2,7 @@
 /** You should not be committing this file to GitHub **/
 /** Repeat: DO! NOT! COMMIT! THIS! FILE! TO! YOUR! REPO! **/
 
-const MONGO_STAGING_URL = 'mongodb://heroku_621f7rcm:6j7eduqpk3hji6dp9hcpppbpt7@ds157278.mlab.com:57278/heroku_621f7rcm';
-
+const MONGO_STAGING_URL = 'mongodb://shouvik:shouvik@ds015326-a0.mlab.com:15326/averpointbeta';
 
 const secrets = {
 	db: MONGO_STAGING_URL || process.env.MONGO_URI || "mongodb://localhost/AverPointMERN",
