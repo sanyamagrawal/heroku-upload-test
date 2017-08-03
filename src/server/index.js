@@ -1,6 +1,6 @@
 import fs from "fs"
 import express from "express"
-//import mongoose from "mongoose"
+import mongoose from "mongoose"
 import bcrypt from "bcrypt-nodejs"
 import passport from "passport"
 import webpack from "webpack" 
@@ -16,27 +16,27 @@ const app = express()
 
 app.use(express.static(paths.appBuild));
 
-// const connect = () => {
-//   mongoose.connect(secrets.db, (err, res) => {
-//     if (err) {
-//       console.log(`Error connecting to ${secrets.db}. ${err}`)
-//     } else {
-//       console.log(`Successfully connected to ${secrets.db}.`)
-//     }
-//   })
-// }
+const connect = () => {
+  mongoose.connect(secrets.db, (err, res) => {
+    if (err) {
+      console.log(`Error connecting to ${secrets.db}. ${err}`)
+    } else {
+      console.log(`Successfully connected to ${secrets.db}.`)
+    }
+  })
+}
 
-// connect();
+connect();
 
-// mongoose.Promise = Promise; 
-// mongoose.connection.on("error", console.error)
-// mongoose.connection.on("disconnected", connect)
+mongoose.Promise = Promise; 
+mongoose.connection.on("error", console.error)
+mongoose.connection.on("disconnected", connect)
 
 // -------------Email Verification----------------
 //var nev = require('email-verification')(mongoose);
 var promisifyAll = require('es6-promisify-all');
 //var fs = promisifyAll(require('fs'));
-//global.nev = promisifyAll(require('email-verification')(mongoose));
+global.nev = promisifyAll(require('email-verification')(mongoose));
 
 function PromiseError(message) {
   this.name = 'PromiseError';
@@ -47,7 +47,7 @@ PromiseError.prototype = Object.create(Error.prototype);
 PromiseError.prototype.constructor = PromiseError;
 
 // our persistent user model
-// import User from './models/users';
+import User from './models/users';
 
 configurePassport(app, passport)
 configureExpress(app, passport)

@@ -5,7 +5,7 @@ import bodyParser from "body-parser"
 import connectMongo from "connect-mongo"
 import secrets from "./secrets"
 
-// const MongoStore = connectMongo(session)
+const MongoStore = connectMongo(session)
 
 export default function(app, passport) {
 	console.log(process.env.PORT, process.env.HOST, process.env);
@@ -23,21 +23,21 @@ export default function(app, passport) {
 	app.use(bodyParser.urlencoded({ extended: true }))
 	app.use(express.static(path.join(process.cwd(), 'public')));
 
-	// const sess = {
-	// 	resave: true,
-	// 	saveUninitialized: true,
-	// 	secret: secrets.sessionSecret,
-	// 	proxy: false,
-	// 	name: "sessionId",
-	// 	cookie: {
-	// 		httpOnly: true,
-	// 		secure: false
-	// 	},
-	// 	store: new MongoStore({
-	// 		url: secrets.db,
-	// 		autoReconnect: true
-	// 	})
-	// }
+	const sess = {
+		resave: true,
+		saveUninitialized: true,
+		secret: secrets.sessionSecret,
+		proxy: false,
+		name: "sessionId",
+		cookie: {
+			httpOnly: true,
+			secure: false
+		},
+		store: new MongoStore({
+			url: secrets.db,
+			autoReconnect: true
+		})
+	}
 
 	var node_env = process.env.NODE_ENV;
 	console.log('--------------------------');
@@ -46,10 +46,10 @@ export default function(app, passport) {
 	if(node_env === 'production') {
 		console.log('===> 🚦  Note: In order for authentication to work in production');
 		console.log('===>           you will need a secure HTTPS connection');
-		// sess.cookie.secure = true; // Serve secure cookies
+		sess.cookie.secure = true; // Serve secure cookies
 	}
 
-	// app.use(session(sess))
+	app.use(session(sess))
 
 	app.use(passport.initialize())
 	app.use(passport.session())
