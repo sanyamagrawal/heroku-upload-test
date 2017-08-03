@@ -8,7 +8,7 @@ import secrets from "./secrets"
 // const MongoStore = connectMongo(session)
 
 export default function(app, passport) {
-	console.log(process.env.PORT, process.env.host);
+	console.log(process.env.PORT, process.env.HOST, process.env);
 	const port = process.env.PORT || '3001';
 	const host = process.env.host || 'localhost';
 	app.set("port", port);
