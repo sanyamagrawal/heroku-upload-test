@@ -60,7 +60,7 @@ app.get('*', function(request, response) {
 });
 
 // start listening to incoming requests
-app.listen(process.env.PORT || app.get("port"), (err) => {
+app.listen(app.get("port"), (err) => {
   if (err) {
     console.err(err.stack)
   } else {
